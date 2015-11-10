@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html ng-app='regression'>
+<html>
   <head>
     <meta charset="utf-8" />
     <title>Regression Chart Creator</title>
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="styles/style.css" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="leastSqr.js"></script>
   </head>
   <body>
-    <!-- the ng-view directive is where our templates will be loaded into when navigated to -->
-    <div ng-view></div>
+    <h1>Least Squares Regression Calculator</h1>
+    <div ng-app="app" ng-controller="appCtrl">
 
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
+      <form name="inputForm" ng-submit="addPoint()">
+        <span>X value:  </span><input type="number" name="xVal" ng-model="x_val" />
+        <span>Y value:  </span><input type="number" name="yVal" ng-model="y_val" />
+        <button type="submit">Submit</button>
+      </form>
 
-    <script src="app/app.js"></script>
+      <div ng-repeat="i in xVals">
+        {{i}}
+      </div>
+
+      <form name="regress" ng-submit="calcRegress()">
+        <span>type: </span>
+        <select name="cars">
+          <option value="0" ng-model="ftype">Polynomial</option>
+          <option value="1" ng-model="ftype">Exponential</option>
+          <option value="2" ng-model="ftype">Trigonometric</option>
+          <option value="3" ng-model="ftype">Logarithmic</option>
+        </select>
+        <span>order: </span><input type="number" ng-model="order" />
+        <button type="submit">Calculate</button>
+      </form>
+
+      <div>
+        {{solution}}
+      </div>
+
+    </div>
   </body>
 </html>

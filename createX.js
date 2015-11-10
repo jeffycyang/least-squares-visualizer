@@ -1,7 +1,7 @@
 function createX(type,xValues,order){
 	var xArray;
 	if(order){
-		xArray=new Array(order);
+		xArray=new Array(order-1);
 	}else{
 		xArray=[];
 	}

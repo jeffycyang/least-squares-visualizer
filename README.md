@@ -56,4 +56,4 @@ To build on your learning of core engineering concepts, we will begin thinking a
 ## Extra Credit
 
 - [ ] Use some graphical library like D3, Sigma, or Highcharts and plot the data points as well as the resuting function on the same Cartesian graph
-
+- [ ] Allow users to pick from choices of function spaces - polynomial, exponential, trigonometric, and logarithmic
