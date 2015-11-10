@@ -31,12 +31,12 @@
           <option value="3" ng-model="ftype">Logarithmic</option>
         </select>
         <span>order: </span><input type="number" ng-model="order" />
-        <button type="submit" ng-click="hasCalc=!hasCalc">Calculate</button>
+        <button type="submit" ng-click="hasCalc=true">Calculate</button>
       </form>
 
       <span ng-show="hasCalc"><strong>y = </strong></span>
       <span ng-repeat="c in solution">
-        {{c[0]}}<strong> x</strong><sup>{{$index}}</sup><span ng-if="$index!==order-1"> + </span>
+        {{c[0]}}<strong> x</strong><sup>{{$index}}</sup><span ng-if="solution[$index+1][0]"> + </span>
       </span>
 
     </div>
