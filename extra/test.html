@@ -1,189 +1,190 @@
-<!DOCTYPE html>
-<html ng-app='regression'>
-	<head>
-		<meta charset="utf-8">
-		<title>Plotting a Trendline with D3.js</title>
-		<style>
-			.line {
-				stroke: blue;
-				fill:none;
-				stroke-width: 3;
-			}
-			
-			.axis path,
-			.axis line {
-				fill: none;
-				stroke: black;
-				shape-rendering: crispEdges;
-			}
-			
-			.axis text {
-				font-size: 10px;
-				font-family: sans-serif;
-			}
-			
-			.text-label {
-				font-size: 10px;
-				font-family: sans-serif;
-			}
-			
-		</style>
-	</head>
-	<body>
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script>
-		var height = 300;
-		var width = 600;
-		var margin = {top: 20, right:20, bottom: 50, left: 20};
-		
-		// formatters for axis and labels
-		var currencyFormat = d3.format("$0.2f");
-		var decimalFormat = d3.format("0.2f");
-		
-		var svg = d3.select("body")
-			.append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		
-		svg.append("g")
-			.attr("class", "y axis");
-			
-		svg.append("g")
-			.attr("class", "x axis");
-			
-		var xScale = d3.scale.ordinal()
-			.rangeRoundBands([margin.left, width], .1);
-			
-		var yScale = d3.scale.linear()
-			.range([height, 0]);
-		
-		var xAxis = d3.svg.axis()
-			.scale(xScale)
-			.orient("bottom");
-			
-		var yAxis = d3.svg.axis()
-			.scale(yScale)
-			.orient("left");
-		
-		//REFERENCE CSV DATA POINTS FILE HERE
-		d3.csv("usd_euro.csv", function(data) {
-			
-			// extract the x labels for the axis and scale domain 'yearmonth' THIS HAS TO CHANGE
-			var xLabels = data.map(function (d) { return d['yearmonth']; })
-		
-			xScale.domain(xLabels);
-			//the 'rate' HAS TO BE CHANGED
-			yScale.domain([0, Math.round(d3.max(data, function(d) { return parseFloat(d['rate']); }))]);
-			
-			var line = d3.svg.line()
-				.x(function(d) { return xScale(d['yearmonth']); })
-				.y(function(d) { return yScale(d['rate']); });
-			
-			svg.append("path")
-				.datum(data)
-				.attr("class","line")
-				.attr("d", line);
-			
-			svg.select(".x.axis")
-				.attr("transform", "translate(0," + (height) + ")")
-				.call(xAxis.tickValues(xLabels.filter(function(d, i) { 
-					if (i % 12 == 0)
-						return d;
-					})))
-				.selectAll("text")
-				.style("text-anchor","end")
-				.attr("transform", function(d) {
-					return "rotate(-45)";
-				});
-			
-			svg.select(".y.axis")
-				.attr("transform", "translate(" + (margin.left) + ",0)")
-				.call(yAxis.tickFormat(currencyFormat));
-				
-			// chart title
-			svg.append("text")
-				.attr("x", (width + (margin.left + margin.right) )/ 2)
-				.attr("y", 0 + margin.top)
-				.attr("text-anchor", "middle")
-				.style("font-size", "16px")
-				.style("font-family", "sans-serif")
-				//CHANGE NAME HERE SOMEHOW
-				.text("USD/EURO Exhange Rate");
-			
-			// x axis label
-			svg.append("text")
-				.attr("x", (width + (margin.left + margin.right) )/ 2)
-				.attr("y", height + margin.bottom)
-				.attr("class", "text-label")
-				.attr("text-anchor", "middle")
-				//CHANGE LABEL HERE SOMEHOW
-				.text("Year-Month");
-			
-			// get the x and y values for least squares
-			var xSeries = d3.range(1, xLabels.length + 1);
-			var ySeries = data.map(function(d) { return parseFloat(d['rate']); });
-			
-			var leastSquaresCoeff = leastSquares(xSeries, ySeries);
-			
-			// apply the reults of the least squares regression
-			var x1 = xLabels[0];
-			var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
-			var x2 = xLabels[xLabels.length - 1];
-			var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1];
-			var trendData = [[x1,y1,x2,y2]];
-			
-			var trendline = svg.selectAll(".trendline")
-				.data(trendData);
-				
-			trendline.enter()
-				.append("line")
-				.attr("class", "trendline")
-				.attr("x1", function(d) { return xScale(d[0]); })
-				.attr("y1", function(d) { return yScale(d[1]); })
-				.attr("x2", function(d) { return xScale(d[2]); })
-				.attr("y2", function(d) { return yScale(d[3]); })
-				.attr("stroke", "black")
-				.attr("stroke-width", 1);
-			
-			// display equation on the chart
-			svg.append("text")
-				.text("eq: " + decimalFormat(leastSquaresCoeff[0]) + "x + " + 
-					decimalFormat(leastSquaresCoeff[1]))
-				.attr("class", "text-label")
-				.attr("x", function(d) {return xScale(x2) - 60;})
-				.attr("y", function(d) {return yScale(y2) - 30;});
-			
-			// display r-square on the chart
-			svg.append("text")
-				.text("r-sq: " + decimalFormat(leastSquaresCoeff[2]))
-				.attr("class", "text-label")
-				.attr("x", function(d) {return xScale(x2) - 60;})
-				.attr("y", function(d) {return yScale(y2) - 10;});
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
 
-		});		
-		// returns slope, intercept and r-square of the line
-		function leastSquares(xSeries, ySeries) {
-			var reduceSumFunc = function(prev, cur) { return prev + cur; };
-			
-			var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
-			var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="578" height="300"></canvas>
+    <script>
+      function Graph(config) {
+        // user defined properties
+        this.canvas = document.getElementById(config.canvasId);
+        this.minX = config.minX;
+        this.minY = config.minY;
+        this.maxX = config.maxX;
+        this.maxY = config.maxY;
+        this.unitsPerTick = config.unitsPerTick;
 
-			var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
-				.reduce(reduceSumFunc);
-			
-			var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
-				.reduce(reduceSumFunc);
-				
-			var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
-				.reduce(reduceSumFunc);
-				
-			var slope = ssXY / ssXX;
-			var intercept = yBar - (xBar * slope);
-			var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
-			
-			return [slope, intercept, rSquare];
-		}		
-	</script>
-	</body>
+        // constants
+        this.axisColor = '#aaa';
+        this.font = '8pt Calibri';
+        this.tickSize = 20;
+
+        // relationships
+        this.context = this.canvas.getContext('2d');
+        this.rangeX = this.maxX - this.minX;
+        this.rangeY = this.maxY - this.minY;
+        this.unitX = this.canvas.width / this.rangeX;
+        this.unitY = this.canvas.height / this.rangeY;
+        this.centerY = Math.round(Math.abs(this.minY / this.rangeY) * this.canvas.height);
+        this.centerX = Math.round(Math.abs(this.minX / this.rangeX) * this.canvas.width);
+        this.iteration = (this.maxX - this.minX) / 1000;
+        this.scaleX = this.canvas.width / this.rangeX;
+        this.scaleY = this.canvas.height / this.rangeY;
+
+        // draw x and y axis
+        this.drawXAxis();
+        this.drawYAxis();
+      }
+
+      Graph.prototype.drawXAxis = function() {
+        var context = this.context;
+        context.save();
+        context.beginPath();
+        context.moveTo(0, this.centerY);
+        context.lineTo(this.canvas.width, this.centerY);
+        context.strokeStyle = this.axisColor;
+        context.lineWidth = 2;
+        context.stroke();
+
+        // draw tick marks
+        var xPosIncrement = this.unitsPerTick * this.unitX;
+        var xPos, unit;
+        context.font = this.font;
+        context.textAlign = 'center';
+        context.textBaseline = 'top';
+
+        // draw left tick marks
+        xPos = this.centerX - xPosIncrement;
+        unit = -1 * this.unitsPerTick;
+        while(xPos > 0) {
+          context.moveTo(xPos, this.centerY - this.tickSize / 2);
+          context.lineTo(xPos, this.centerY + this.tickSize / 2);
+          context.stroke();
+          context.fillText(unit, xPos, this.centerY + this.tickSize / 2 + 3);
+          unit -= this.unitsPerTick;
+          xPos = Math.round(xPos - xPosIncrement);
+        }
+
+        // draw right tick marks
+        xPos = this.centerX + xPosIncrement;
+        unit = this.unitsPerTick;
+        while(xPos < this.canvas.width) {
+          context.moveTo(xPos, this.centerY - this.tickSize / 2);
+          context.lineTo(xPos, this.centerY + this.tickSize / 2);
+          context.stroke();
+          context.fillText(unit, xPos, this.centerY + this.tickSize / 2 + 3);
+          unit += this.unitsPerTick;
+          xPos = Math.round(xPos + xPosIncrement);
+        }
+        context.restore();
+      };
+
+      Graph.prototype.drawYAxis = function() {
+        var context = this.context;
+        context.save();
+        context.beginPath();
+        context.moveTo(this.centerX, 0);
+        context.lineTo(this.centerX, this.canvas.height);
+        context.strokeStyle = this.axisColor;
+        context.lineWidth = 2;
+        context.stroke();
+
+        // draw tick marks
+        var yPosIncrement = this.unitsPerTick * this.unitY;
+        var yPos, unit;
+        context.font = this.font;
+        context.textAlign = 'right';
+        context.textBaseline = 'middle';
+
+        // draw top tick marks
+        yPos = this.centerY - yPosIncrement;
+        unit = this.unitsPerTick;
+        while(yPos > 0) {
+          context.moveTo(this.centerX - this.tickSize / 2, yPos);
+          context.lineTo(this.centerX + this.tickSize / 2, yPos);
+          context.stroke();
+          context.fillText(unit, this.centerX - this.tickSize / 2 - 3, yPos);
+          unit += this.unitsPerTick;
+          yPos = Math.round(yPos - yPosIncrement);
+        }
+
+        // draw bottom tick marks
+        yPos = this.centerY + yPosIncrement;
+        unit = -1 * this.unitsPerTick;
+        while(yPos < this.canvas.height) {
+          context.moveTo(this.centerX - this.tickSize / 2, yPos);
+          context.lineTo(this.centerX + this.tickSize / 2, yPos);
+          context.stroke();
+          context.fillText(unit, this.centerX - this.tickSize / 2 - 3, yPos);
+          unit -= this.unitsPerTick;
+          yPos = Math.round(yPos + yPosIncrement);
+        }
+        context.restore();
+      };
+
+      Graph.prototype.drawEquation = function(equation, color, thickness) {
+        var context = this.context;
+        context.save();
+        context.save();
+        this.transformContext();
+
+        context.beginPath();
+        context.moveTo(this.minX, equation(this.minX));
+
+        for(var x = this.minX + this.iteration; x <= this.maxX; x += this.iteration) {
+          context.lineTo(x, equation(x));
+        }
+
+        context.restore();
+        context.lineJoin = 'round';
+        context.lineWidth = thickness;
+        context.strokeStyle = color;
+        context.stroke();
+        context.restore();
+      };
+
+      Graph.prototype.transformContext = function() {
+        var context = this.context;
+
+        // move context to center of canvas
+        this.context.translate(this.centerX, this.centerY);
+
+        /*
+         * stretch grid to fit the canvas window, and
+         * invert the y scale so that that increments
+         * as you move upwards
+         */
+        context.scale(this.scaleX, -this.scaleY);
+      };
+      var myGraph = new Graph({
+        canvasId: 'myCanvas',
+        minX: -10,
+        minY: -10,
+        maxX: 10,
+        maxY: 10,
+        unitsPerTick: 1
+      });
+
+      myGraph.drawEquation(function(x) {
+        return 5 * Math.sin(x);
+      }, 'green', 3);
+
+      myGraph.drawEquation(function(x) {
+        return x * x;
+      }, 'blue', 3);
+
+      myGraph.drawEquation(function(x) {
+        return 1 * x;
+      }, 'red', 3);
+
+    </script>
+  </body>
 </html>
+      

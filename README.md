@@ -54,6 +54,9 @@ To build on your learning of core engineering concepts, we will begin thinking a
 - [ ] Display the results as the actual correlation function
 
 ## Extra Credit
-- [ ] Use some graphical library like D3, Sigma, or Highcharts and plot the data points as well as the resulting function on the same Cartesian graph
+- [ ] Use some graphical library like D3, Sigma, Highcharts, or HTML5 Canvas and plot the data points as well as the resulting function on the same Cartesian graph
 - [ ] Allow users to pick from choices of function spaces - polynomial, exponential, trigonometric, and logarithmic
+
+## Nightmare Mode
+- [ ] Add error term to allow users to accurately assess the confidence in a correlation
 - [ ] Allow users ability to input batch data set

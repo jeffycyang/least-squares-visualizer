@@ -17,8 +17,8 @@ app.controller('appCtrl',function($scope){
 
   $scope.calcRegress=function(){
   	$scope.funcType=$scope.ftype;
-  	console.log("fuck you");
-  	console.log($scope.funcType);
+  	// console.log("fuck you");
+  	// console.log($scope.funcType);
   	if($scope.order>$scope.xVals.length){
   	  $scope.isValid=false;
   	}else{
