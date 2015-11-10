@@ -34,10 +34,16 @@
         <button type="submit" ng-click="hasCalc=true">Calculate</button>
       </form>
 
-      <span ng-show="hasCalc"><strong>y = </strong></span>
-      <span ng-repeat="c in solution">
-        {{c[0]}}<strong> x</strong><sup>{{$index}}</sup><span ng-if="solution[$index+1][0]"> + </span>
-      </span>
+      <div ng-show="isValid">
+        <span ng-show="hasCalc"><strong>y = </strong></span>
+        <span ng-repeat="c in solution">
+          {{c[0]}}<strong> x</strong><sup>{{$index}}</sup><span ng-if="solution[$index+1][0]"> + </span>
+        </span>
+      </div>
+
+      <div>
+        <span ng-show="!isValid">Invalid entry, degree/order of polynomial must be equal to or less than number of data points</span>
+      </div>
 
     </div>
   </body>
