@@ -45,7 +45,7 @@ To build on your learning of core engineering concepts, we will begin thinking a
   - [ ] create column vector from input Y values
   - [ ] create X matrix from X vector
   - [ ] create function to transpose X matrix
-  - [ ] create function to invert matrices (suggest to find one online)
+  - [ ] create function to invert matrices (suggest finding one online)
   - [ ] create function to multiply matrices
   - [ ] create function that uses all the above to run least squares regression given input X and Y values
 - [ ] Create webpage using angular to allow users to input their data

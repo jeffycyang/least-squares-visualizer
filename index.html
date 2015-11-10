@@ -13,13 +13,13 @@
     <div ng-app="app" ng-controller="appCtrl">
 
       <form name="inputForm" ng-submit="addPoint()">
-        <span>X value:  </span><input type="number" name="xVal" ng-model="x_val" />
-        <span>Y value:  </span><input type="number" name="yVal" ng-model="y_val" />
+        <span>X-value:  </span><input type="number" name="xVal" ng-model="x_val" />
+        <span>Y-value:  </span><input type="number" name="yVal" ng-model="y_val" />
         <button type="submit">Submit</button>
       </form>
 
       <div ng-repeat="i in xVals">
-        {{i}}
+        ( {{i}} , {{yVals[$index]}} )
       </div>
 
       <form name="regress" ng-submit="calcRegress()">
@@ -36,7 +36,7 @@
 
       <span ng-show="hasCalc"><strong>y = </strong></span>
       <span ng-repeat="c in solution">
-        {{c[0]}}<strong> x</strong><sup>{{$index}}</sup>
+        {{c[0]}}<strong> x</strong><sup>{{$index}}</sup><span ng-if="$index!==order-1"> + </span>
       </span>
 
     </div>
