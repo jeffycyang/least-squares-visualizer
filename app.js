@@ -7,6 +7,8 @@ app.controller('appCtrl',function($scope){
   $scope.order;
   $scope.solution;
 
+  $scope.hasCalc=false;
+
   $scope.addPoint=function(){
   	$scope.xVals.push($scope.x_val);
   	$scope.yVals.push($scope.y_val);
