@@ -37,7 +37,7 @@
       <div ng-show="isValid">
         <span ng-show="hasCalc"><strong>y = </strong></span>
         <span ng-repeat="c in solution">
-          {{c[0]}}<strong> x</strong><sup>{{$index}}</sup><span ng-if="solution[$index+1][0]"> + </span>
+          {{c[0]}}<span ng-if="$index!==0"><strong> x</strong><sup ng-if="$index!==1">{{$index}}</sup></span><span ng-if="solution[$index+1][0]"> + </span>
         </span>
       </div>
 
