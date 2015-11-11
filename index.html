@@ -8,18 +8,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="app.js"></script>
     <script src="leastSqr.js"></script>
+    <style>
+      body { font-family: Helvetica, sans-serif;
+             /*background-image: url("img/math7.jpg");*/ }
+    </style>
   </head>
   <body>
     <h1>Least Squares Regression Calculator</h1>
     <div ng-app="app" ng-controller="appCtrl">
 
-      <form name="inputForm" ng-submit="addPoint()">
+      <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
         <span>X-value:  </span><input type="number" name="xVal" ng-model="x_val" />
         <span>Y-value:  </span><input type="number" name="yVal" ng-model="y_val" />
         <button type="submit">Submit</button>
       </form>
 
-      <div ng-repeat="i in xVals">
+      <div ng-repeat="i in xVals" ng-click="removePoint($index)">
         ( {{i}} , {{yVals[$index]}} )
       </div>
 
@@ -46,7 +50,7 @@
         <span ng-show="!isValid">Invalid entry, degree/order of polynomial must be equal to or less than number of data points</span>
       </div>
 
-      <canvas id="myCanvas" width="578" height="300"></canvas>
+      <canvas id="myCanvas" width="578" height="300" style="margin-top: 10px"></canvas>
       <script ng-if="hasCalc&&isValid">
 
         function Graph(config) {

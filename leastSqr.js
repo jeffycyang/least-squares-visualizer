@@ -191,7 +191,6 @@ function transposeArray(arr){
     }
     return(newArray);
 }
-
 function leastSqr(type,xVal,yVal,order){
     xM=createX(type,xVal,order);
     yV=createY(type,yVal);

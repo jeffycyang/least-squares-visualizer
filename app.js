@@ -15,6 +15,11 @@ app.controller('appCtrl',function($scope){
   	$scope.yVals.push($scope.y_val);
   };
 
+  $scope.removePoint=function(ind){
+  	$scope.xVals.splice(ind,1);
+  	$scope.yVals.splice(ind,1);
+  };
+
   $scope.calcRegress=function(){
   	$scope.funcType=$scope.ftype;
   	// console.log("fuck you");
