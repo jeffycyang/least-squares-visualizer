@@ -53,6 +53,7 @@ To build on your learning of core engineering concepts, we will begin thinking a
 - [ ] Allow user to click a data point to remove it
 - [ ] Allow users to click a submit button that runs the data through the least squares regression process and output the results
 - [ ] Display the results as the actual correlation function
+- [ ] Allow users to input an x-value and return the corresponding y-value output from the computed correlation function
 
 ## Extra Credit
 - [ ] Use some graphical library like D3, Sigma, Highcharts, or HTML5 Canvas and plot the data points as well as the resulting function on the same Cartesian graph
@@ -61,5 +62,6 @@ To build on your learning of core engineering concepts, we will begin thinking a
 
 ## Nightmare Mode
 - [ ] Add error term to allow users to accurately assess the confidence in a correlation
+- [ ] Automatically pick the function that has the smallest error term
 - [ ] Allow users ability to input batch data set
 - [ ] Allow users ability to define a metric - instead of multiplication between matrix elements in any matrix operation - allow an arbitrary binary operation that can be treated as a metric (you better know some math for this...)
