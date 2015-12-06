@@ -6,6 +6,7 @@ app.controller('appCtrl',function($scope){
   $scope.funcType;
   $scope.order;
   $scope.solution;
+  $scope.ftype;
 
   $scope.hasCalc=false;
   $scope.isValid=true;
@@ -22,16 +23,18 @@ app.controller('appCtrl',function($scope){
 
   $scope.calcRegress=function(){
   	$scope.funcType=$scope.ftype;
-  	// console.log("fuck you");
-  	// console.log($scope.funcType);
+  	// console.log("ftype "+$scope.ftype+" type "+typeof $scope.ftype);
+    // ftype is a string
   	if($scope.order>$scope.xVals.length){
   	  $scope.isValid=false;
   	}else{
   	  $scope.isValid=true;
   	}
   	if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
-  	  $scope.solution=leastSqr(0,$scope.xVals,$scope.yVals,$scope.order);
-  	}
+      //change 0 to $scope.ftype
+  	  $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
+  	  // console.log("wtf is this "+JSON.stringify($scope.solution));
+    }
   };
 
 });

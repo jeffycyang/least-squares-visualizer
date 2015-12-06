@@ -29,11 +29,11 @@
 
       <form name="regress" ng-submit="calcRegress()">
         <span>type: </span>
-        <select name="cars">
-          <option value="0" ng-model="ftype">Polynomial</option>
-          <option value="1" ng-model="ftype">Exponential</option>
-          <option value="2" ng-model="ftype">Trigonometric</option>
-          <option value="3" ng-model="ftype">Logarithmic</option>
+        <select name="ftype" ng-model="ftype">
+          <option value="0">Polynomial</option>
+          <option value="1">Exponential</option>
+          <option value="2">Trigonometric</option>
+          <option value="3">Logarithmic</option>
         </select>
         <span>order: </span><input type="number" ng-model="order" />
         <button type="submit" ng-click="hasCalc=true">Calculate</button>
@@ -42,9 +42,19 @@
       <div ng-show="isValid">
         <span ng-show="hasCalc"><strong>y = </strong></span>
         <span ng-repeat="c in solution">
-          {{c[0]}}<span ng-if="$index!==0"><strong> x</strong><sup ng-if="$index!==1">{{$index}}</sup></span><span ng-if="solution[$index+1][0]"> + </span>
+          <span ng-if="ftype==='0'">
+            {{c[0]}}<span ng-if="$index!==0"><strong> x</strong><sup ng-if="$index!==1">{{$index}}</sup></span><span ng-if="solution[$index+1][0]"> + </span>
+          </span>
+        </span>
+        <span ng-if="ftype==='1'">
+          {{solution[0][0]}}<span><strong> e</strong><sup>{{solution[1][0]}} x</sup></span>
         </span>
       </div>
+
+      <!--<form ng-show="isValid" ng-submit="forecast()">
+        <input type="number" ng-model="futurePoint" />
+        <buttom type="submit"></button>
+      </form>-->
 
       <div>
         <span ng-show="!isValid">Invalid entry, degree/order of polynomial must be equal to or less than number of data points</span>
