@@ -35,7 +35,7 @@
           <option value="2">Trigonometric</option>
           <option value="3">Logarithmic</option>
         </select>
-        <span>order: </span><input type="number" ng-model="order" />
+        <span ng-show="ftype==='0'"><span>order: </span><input type="number" ng-model="order" /></span>
         <button type="submit" ng-click="hasCalc=true">Calculate</button>
       </form>
 
@@ -48,6 +48,9 @@
         </span>
         <span ng-if="ftype==='1'">
           {{solution[0][0]}}<span><strong> e</strong><sup>{{solution[1][0]}} x</sup></span>
+        </span>
+        <span ng-if="ftype==='3'">
+          {{solution[0][0]}}<span><strong> + </strong>{{solution[1][0]}} ln(x)</span>
         </span>
       </div>
 
@@ -223,17 +226,23 @@
           unitsPerTick: 1
         });
 
-        // myGraph.drawEquation(function(x) {
-        //   var eq;
-        //   for(var i=0;i<solution.length;i++){
-        //     eq += solution[i][0] * Math.pow(x,i);
-        //   }
-        //   return eq;
-        // }, 'green', 3);
+        myGraph.drawEquation(function(x) {
+          window.onload = function(){
+            if(angular.element(document.querySelector('[ng-controller="appCtrl"]')).scope().hasCalc){
+              var solution = angular.element(document.querySelector('[ng-controller="appCtrl"]')).scope().solution;
+              console.log("solution "+JSON.stringify(solution));
+              var eq;
+              for(var i=0;i<solution.length;i++){
+                eq += solution[i][0] * Math.pow(x,i);
+              }
+              return eq;
+            }
+          }
+        }, 'green', 3);
 
-        // myGraph.drawEquation(function(x) {
-        //   return x * x;
-        // }, 'blue', 3);
+        myGraph.drawEquation(function(x) {
+          return x * x;
+        }, 'blue', 3);
 
         // myGraph.drawEquation(function(x) {
         //   return 1 * x;

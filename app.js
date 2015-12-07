@@ -23,7 +23,6 @@ app.controller('appCtrl',function($scope){
 
   $scope.calcRegress=function(){
   	$scope.funcType=$scope.ftype;
-  	// console.log("ftype "+$scope.ftype+" type "+typeof $scope.ftype);
     // ftype is a string
   	if($scope.order>$scope.xVals.length){
   	  $scope.isValid=false;

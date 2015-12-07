@@ -156,8 +156,9 @@ function createX(type,xValues,order){
 			//case for exponential and logarithmic
 			if(type===1){
 				xArray.push([1,xValues[k]]);
-			}else if(type===3){
-				xArray[k].push([1,Math.log(xValues[k])]);
+			}
+            if(type===3){
+				xArray.push([1,Math.log(xValues[k])]);
 			}
 		}
 	}
@@ -198,7 +199,7 @@ function leastSqr(type,xVal,yVal,order){
     xTX=matrixMultiply(xT,xM);
     invXTX=matrix_invert(xTX);
     xTY=matrixMultiply(xT,yV);
-    if(type===0){
+    if(type===0||type===3){
         return matrixMultiply(invXTX,xTY);
     }
     if(type===1){
