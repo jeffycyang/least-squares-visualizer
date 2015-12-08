@@ -7,7 +7,8 @@ app.controller('appCtrl',function($scope){
   $scope.order;
   $scope.solution;
   $scope.ftype;
-
+  $scope.saveftype;
+  $scope.trigOrder=[1];
   $scope.hasCalc=false;
   $scope.isValid=true;
 
@@ -22,18 +23,31 @@ app.controller('appCtrl',function($scope){
   };
 
   $scope.calcRegress=function(){
-  	$scope.funcType=$scope.ftype;
-    // ftype is a string
+  	$scope.saveftype=$scope.ftype;
+    //fix this order v vals thing
   	if($scope.order>$scope.xVals.length){
   	  $scope.isValid=false;
   	}else{
   	  $scope.isValid=true;
   	}
-  	if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
-      //change 0 to $scope.ftype
-  	  $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
-  	  // console.log("wtf is this "+JSON.stringify($scope.solution));
+    if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
+      if($scope.saveftype==='1'||$scope.saveftype==='3'){
+        $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals);
+      }else{
+        $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
+        console.log("trig solut "+$scope.solution);
+      }
+    }
+    if($scope.saveftype==='2'){
+      var order=1;
+      for(var i=0;i<$scope.solution.length;i++){
+        if(i!==0&&i%2===1){
+          $scope.trigOrder[i]=order;
+        }else if(i!==0&&i%2===0){
+          $scope.trigOrder[i]=order;
+          order++;
+        }
+      }
     }
   };
-
 });

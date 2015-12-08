@@ -142,14 +142,34 @@ function createX(type,xValues,order){
 	//order only matters for polynomial & trigonometric
 	if(type===0||type===2){
 		for(var i=0;i<xValues.length;i++){
-		    xArray[i]=new Array(order);
-			for(var j=0;j<order;j++){
-				if(type===0){
-					xArray[i][j]=Math.pow(xValues[i],j);
-				}else if(type===2){
-					
-				}
-			}
+		 //    xArray[i]=new Array(order);
+			// for(var j=0;j<order;j++){
+			// 	if(type===0){
+			// 		xArray[i][j]=Math.pow(xValues[i],j);
+			// 	}else if(type===2){
+
+			// 	}
+			// }
+            if(type===0){
+                xArray[i]=new Array(order);
+                for(var j=0;j<order;j++){
+                    xArray[i][j]=Math.pow(xValues[i],j);
+                }
+            }
+            if(type===2){
+                xArray[i]=new Array(order*2);
+                //this for loop is not working properly
+                var trigOrder=1;
+                for(var j=0;j<=order*2;j+=2){
+                    if(j===0){
+                        xArray[i][j]=1;
+                    }else{
+                        xArray[i][j-1]=Math.sin(trigOrder*xValues[i]);
+                        xArray[i][j]=Math.cos(trigOrder*xValues[i]);
+                        trigOrder++;
+                    }
+                }
+            }
 		}
 	}else{
 		for(var k=0;k<xValues.length;k++){
@@ -199,7 +219,7 @@ function leastSqr(type,xVal,yVal,order){
     xTX=matrixMultiply(xT,xM);
     invXTX=matrix_invert(xTX);
     xTY=matrixMultiply(xT,yV);
-    if(type===0||type===3){
+    if(type===0||type===2||type===3){
         return matrixMultiply(invXTX,xTY);
     }
     if(type===1){
