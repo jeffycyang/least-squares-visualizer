@@ -25,17 +25,20 @@ app.controller('appCtrl',function($scope){
   $scope.calcRegress=function(){
   	$scope.saveftype=$scope.ftype;
     //fix this order v vals thing
-  	if($scope.order>$scope.xVals.length){
-  	  $scope.isValid=false;
-  	}else{
-  	  $scope.isValid=true;
-  	}
+    if($scope.saveftype==='0'||$scope.saveftype==='2'){
+    	if($scope.order>$scope.xVals.length){
+    	  $scope.isValid=false;
+    	}else{
+    	  $scope.isValid=true;
+    	}
+    }
     if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
       if($scope.saveftype==='1'||$scope.saveftype==='3'){
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals);
       }else{
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
         console.log("trig solut "+$scope.solution);
+        //doesn't always work when the order is 2 less than the fucking number of points, i don't know why
       }
     }
     if($scope.saveftype==='2'){
