@@ -68,6 +68,9 @@
       </div>
 
       <canvas id="myCanvas" width="578" height="300" style="margin-top: 10px"></canvas>
+
+      <!--use ui-view-->
+
       <script ng-if="hasCalc&&isValid">
 
         function Graph(config) {
@@ -244,9 +247,9 @@
           }
         }, 'green', 3);
 
-        myGraph.drawEquation(function(x) {
-          return x * x;
-        }, 'blue', 3);
+        // myGraph.drawEquation(function(x) {
+        //   return x * x;
+        // }, 'blue', 3);
 
         // myGraph.drawEquation(function(x) {
         //   return 1 * x;

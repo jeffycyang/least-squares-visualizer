@@ -25,19 +25,28 @@ app.controller('appCtrl',function($scope){
   $scope.calcRegress=function(){
   	$scope.saveftype=$scope.ftype;
     //fix this order v vals thing
-    if($scope.saveftype==='0'||$scope.saveftype==='2'){
+    if($scope.saveftype==='0'){
     	if($scope.order>$scope.xVals.length){
     	  $scope.isValid=false;
     	}else{
     	  $scope.isValid=true;
     	}
     }
+    //handle order error for trigonometric fit
+    // if($scope.saveftype==='2'){
+    //   if($scope.order>$scope.xVals.length){
+    //     $scope.isValid=false;
+    //   }else{
+    //     $scope.isValid=true;
+    //   }
+    // }
     if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
       if($scope.saveftype==='1'||$scope.saveftype==='3'){
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals);
       }else{
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
-        console.log("trig solut "+$scope.solution);
+        // console.log("trig solut "+$scope.solution);
+        $scope.plotGraph();
         //doesn't always work when the order is 2 less than the fucking number of points, i don't know why
       }
     }
@@ -52,5 +61,47 @@ app.controller('appCtrl',function($scope){
         }
       }
     }
+  };
+
+  $scope.plotGraph=function(){
+    var myGraph = new Graph({
+      canvasId: 'myCanvas',
+      minX: -5,
+      minY: -15,
+      maxX: 15,
+      maxY: 5,
+      unitsPerTick: 1
+    });
+
+    myGraph.drawEquation(function(x) {
+      if($scope.hasCalc){
+        var solution = $scope.solution;
+        var currTerm="";
+        var eq="";
+        for(var i=0;i<solution.length;i++){
+          currTerm="";
+          for(var j=0;j<i;j++){
+            if(j!==i-1){
+              currTerm+="x*";
+            }else{
+              currTerm+="x";
+            }
+          }
+          if(currTerm){
+            eq += JSON.stringify(solution[i][0])+"*"+currTerm;
+            if(i!==solution.length-1){
+              eq+="+";
+            }
+          }else{
+            eq += JSON.stringify(solution[i][0]);
+            if(i!==solution.length-1){
+              eq+="+";
+            }
+          }
+        }
+        console.log("solution "+eq);
+        return eval(eq);
+      }
+    }, 'blue', 3);
   };
 });
