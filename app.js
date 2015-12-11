@@ -43,6 +43,7 @@ app.controller('appCtrl',function($scope){
     if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
       if($scope.saveftype==='1'||$scope.saveftype==='3'){
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals);
+        $scope.plotGraph();
       }else{
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
         // console.log("trig solut "+$scope.solution);
@@ -78,29 +79,41 @@ app.controller('appCtrl',function($scope){
         var solution = $scope.solution;
         var currTerm="";
         var eq="";
-        for(var i=0;i<solution.length;i++){
-          currTerm="";
-          for(var j=0;j<i;j++){
-            if(j!==i-1){
-              currTerm+="x*";
+        if($scope.ftype==='0'){
+          for(var i=0;i<solution.length;i++){
+            currTerm="";
+            for(var j=0;j<i;j++){
+              if(j!==i-1){
+                currTerm+="x*";
+              }else{
+                currTerm+="x";
+              }
+            }
+            if(currTerm){
+              eq += JSON.stringify(solution[i][0])+"*"+currTerm;
+              if(i!==solution.length-1){
+                eq+="+";
+              }
             }else{
-              currTerm+="x";
+              eq += JSON.stringify(solution[i][0]);
+              if(i!==solution.length-1){
+                eq+="+";
+              }
             }
           }
-          if(currTerm){
-            eq += JSON.stringify(solution[i][0])+"*"+currTerm;
-            if(i!==solution.length-1){
-              eq+="+";
-            }
-          }else{
-            eq += JSON.stringify(solution[i][0]);
-            if(i!==solution.length-1){
-              eq+="+";
-            }
-          }
+          console.log("solution "+eq);
+          return eval(eq);
         }
-        console.log("solution "+eq);
-        return eval(eq);
+        if($scope.ftype==='1'){
+          eq=JSON.stringify(solution[0][0])+"*Math.exp("+JSON.stringify(solution[1][0])+"*x)";
+          console.log("solution "+eq);
+          return eval(eq);
+        }
+        if($scope.ftype==='3'){
+          eq=JSON.stringify(solution[0][0])+"+"+JSON.stringify(solution[1][0])+"*Math.log(x)";
+          console.log("solution "+eq);
+          return eval(eq);
+        }
       }
     }, 'blue', 3);
   };
