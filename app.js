@@ -15,6 +15,7 @@ app.controller('appCtrl',function($scope){
   $scope.addPoint=function(){
   	$scope.xVals.push($scope.x_val);
   	$scope.yVals.push($scope.y_val);
+    $scope.plotPoint($scope.x_val,$scope.y_val);
   };
 
   $scope.removePoint=function(ind){
@@ -47,8 +48,8 @@ app.controller('appCtrl',function($scope){
       }else{
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
         // console.log("trig solut "+$scope.solution);
-        $scope.plotGraph();
         //doesn't always work when the order is 2 less than the fucking number of points, i don't know why
+        $scope.plotGraph();
       }
     }
     if($scope.saveftype==='2'){
@@ -64,6 +65,19 @@ app.controller('appCtrl',function($scope){
     }
   };
 
+  $scope.plotPoint=function(cX,cY){
+    var myGraph = new Graph({
+      canvasId: 'myCanvas',
+      minX: -5,
+      minY: -15,
+      maxX: 15,
+      maxY: 5,
+      unitsPerTick: 1
+    });
+
+    myGraph.drawPoint(cX,cY);
+  }
+
   $scope.plotGraph=function(){
     var myGraph = new Graph({
       canvasId: 'myCanvas',
@@ -76,7 +90,7 @@ app.controller('appCtrl',function($scope){
 
     myGraph.drawEquation(function(x) {
       if($scope.hasCalc){
-        var solution = $scope.solution;
+        var solution=$scope.solution;
         var currTerm="";
         var eq="";
         if($scope.ftype==='0'){
@@ -90,12 +104,12 @@ app.controller('appCtrl',function($scope){
               }
             }
             if(currTerm){
-              eq += JSON.stringify(solution[i][0])+"*"+currTerm;
+              eq+=JSON.stringify(solution[i][0])+"*"+currTerm;
               if(i!==solution.length-1){
                 eq+="+";
               }
             }else{
-              eq += JSON.stringify(solution[i][0]);
+              eq+=JSON.stringify(solution[i][0]);
               if(i!==solution.length-1){
                 eq+="+";
               }
@@ -106,6 +120,25 @@ app.controller('appCtrl',function($scope){
         }
         if($scope.ftype==='1'){
           eq=JSON.stringify(solution[0][0])+"*Math.exp("+JSON.stringify(solution[1][0])+"*x)";
+          console.log("solution "+eq);
+          return eval(eq);
+        }
+        if($scope.ftype==='2'){
+          var order=1;
+          for(var i=0;i<solution.length;i++){
+            currTerm="";
+            if(i===0){
+              eq+=JSON.stringify(solution[i][0]);
+            }else if(i%2===1){
+              eq+=JSON.stringify(solution[i][0])+"*Math.sin("+JSON.stringify(order)+"*x)";
+            }else if(i%2===0){
+              eq+=JSON.stringify(solution[i][0])+"*Math.cos("+JSON.stringify(order)+"*x)";
+              order++;
+            }
+            if(i!==solution.length-1){
+              eq+="+";
+            }
+          }
           console.log("solution "+eq);
           return eval(eq);
         }

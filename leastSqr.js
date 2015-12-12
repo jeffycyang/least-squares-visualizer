@@ -142,14 +142,6 @@ function createX(type,xValues,order){
 	//order only matters for polynomial & trigonometric
 	if(type===0||type===2){
 		for(var i=0;i<xValues.length;i++){
-		 //    xArray[i]=new Array(order);
-			// for(var j=0;j<order;j++){
-			// 	if(type===0){
-			// 		xArray[i][j]=Math.pow(xValues[i],j);
-			// 	}else if(type===2){
-
-			// 	}
-			// }
             if(type===0){
                 xArray[i]=new Array(order);
                 for(var j=0;j<order;j++){

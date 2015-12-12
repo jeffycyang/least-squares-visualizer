@@ -14,7 +14,7 @@
     </style>
   </head>
   <body>
-    <h1>ForeCast This!</h1>
+    <h1>Linear Least Squares Visualizer</h1>
     <div ng-app="app" ng-controller="appCtrl">
 
       <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
@@ -224,6 +224,24 @@
            */
           context.scale(this.scaleX, -this.scaleY);
         };
+
+        Graph.prototype.drawPoint = function(cX, cY) {
+          console.log(cX+" "+cY);
+          var context = this.context;
+          var radius = (this.unitX + this.unitY)/20;
+          cX = this.unitX * cX + 5 * this.unitX;
+          if(cY === 0){
+            cY = this.unitY * cY + 5 * this.unitY + 10 * this.unitY;
+          }else if(cY > 0){
+            cY = 5 * this.unitY + (10 - cY) * this.unitY;
+          }
+          context.beginPath();
+          context.arc(cX, cY, radius, 0, 2 * Math.PI, false);
+          context.fillStyle = 'black';
+          context.fill();
+          context.stroke();
+        };
+
         var myGraph = new Graph({
           canvasId: 'myCanvas',
           minX: -5,
