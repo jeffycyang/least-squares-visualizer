@@ -88,6 +88,14 @@ app.controller('appCtrl',function($scope){
       unitsPerTick: 1
     });
 
+    //different colors for different function spaces
+    var color = {
+      '0': 'blue',
+      '1': 'red',
+      '2': 'orange',
+      '3': 'green'
+    }
+
     myGraph.drawEquation(function(x) {
       if($scope.hasCalc){
         var solution=$scope.solution;
@@ -148,6 +156,6 @@ app.controller('appCtrl',function($scope){
           return eval(eq);
         }
       }
-    }, 'blue', 3);
+    }, color[$scope.ftype], 3);
   };
 });
