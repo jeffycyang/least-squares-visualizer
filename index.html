@@ -230,9 +230,9 @@
           var context = this.context;
           var radius = (this.unitX + this.unitY)/20;
           cX = this.unitX * cX + 5 * this.unitX;
-          if(cY === 0){
+          if (cY === 0){
             cY = this.unitY * cY + 5 * this.unitY + 10 * this.unitY;
-          }else if(cY > 0){
+          } else {
             cY = 5 * this.unitY + (10 - cY) * this.unitY;
           }
           context.beginPath();
