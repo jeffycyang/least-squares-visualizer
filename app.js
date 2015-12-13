@@ -29,11 +29,39 @@ app.controller('appCtrl',function($scope){
   	$scope.saveftype=$scope.ftype;
     //fix this order v vals thing
     if($scope.saveftype==='0'){
-    	if($scope.order>$scope.xVals.length){
+    	if($scope.order+1>$scope.xVals.length){
     	  $scope.isValid=false;
     	}else{
     	  $scope.isValid=true;
     	}
+    }
+
+    if($scope.saveftype==='1'){
+      var noYZero=true;
+      for(var i=0;i<$scope.yVals.length;i++){
+        if($scope.yVals[i]<=0){
+          noYZero=false;
+        }
+      }
+      if(!noYZero){
+        $scope.isValid=false;
+      }else{
+        $scope.isValid=true; 
+      }
+    }
+
+    if($scope.saveftype==='3'){
+      var noXZero=true;
+      for(var i=0;i<$scope.xVals.length;i++){
+        if($scope.yVals[i]<=0){
+          noXZero=false;
+        }
+      }
+      if(!noXZero){
+        $scope.isValid=false;
+      }else{
+        $scope.isValid=true; 
+      }
     }
 
     //handle order error for trigonometric fit
@@ -44,10 +72,6 @@ app.controller('appCtrl',function($scope){
     //     $scope.isValid=true;
     //   }
     // }
-
-    //handle error for logarithmic fit
-
-    //handle error for exponential fit
 
     if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
       if($scope.saveftype==='1'||$scope.saveftype==='3'){
@@ -82,7 +106,6 @@ app.controller('appCtrl',function($scope){
 
   $scope.removePlotPoint=function(ind){
     $scope.plottedPoints.splice(ind,1);
-    // console.log("cmon");
     myGraph.redrawGraph();
     for(var i=0;i<$scope.plottedPoints.length;i++){
       myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 

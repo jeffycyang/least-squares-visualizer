@@ -64,7 +64,9 @@
       </form>-->
 
       <div>
-        <span ng-show="!isValid">Invalid entry, degree/order of polynomial must be equal to or less than number of data points</span>
+        <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be equal to or less than number of data points</span>
+        <span ng-show="!isValid&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
+        <span ng-show="!isValid&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
       </div>
 
       <canvas id="myCanvas" width="578" height="300" style="margin-top: 10px"></canvas>
