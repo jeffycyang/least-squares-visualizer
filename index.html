@@ -35,9 +35,14 @@
           <option value="2">Trigonometric</option>
           <option value="3">Logarithmic</option>
         </select>
-        <span ng-show="ftype==='0'||ftype==='2'"><span>order: </span><input type="number" ng-model="order" /></span>
+        <span ng-show="ftype==='0'||ftype==='2'"><span>order: </span><input type="number" ng-model="order" min="0" /></span>
         <button type="submit" ng-click="hasCalc=true">Calculate</button>
       </form>
+
+      <!--forecast point-->
+      <!-- <form name="forecastePoint" ng-submit="forecastePoint()">
+        <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_valForce" />
+      </form> -->
 
       <div ng-show="isValid">
         <span ng-show="hasCalc"><strong>y = </strong></span>

@@ -113,6 +113,10 @@ app.controller('appCtrl',function($scope){
     }
   }
 
+  $scope.forecastePoint=function(){
+    
+  }
+
   $scope.plotGraph=function(){
     //different colors for different function spaces
     var color={
