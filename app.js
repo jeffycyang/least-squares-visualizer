@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app=angular.module('app',[]);
 
 app.controller('appCtrl',function($scope){
   $scope.xVals=[];
@@ -11,6 +11,7 @@ app.controller('appCtrl',function($scope){
   $scope.trigOrder=[1];
   $scope.hasCalc=false;
   $scope.isValid=true;
+  $scope.plottedPoints=[];
 
   $scope.addPoint=function(){
   	$scope.xVals.push($scope.x_val);
@@ -21,6 +22,7 @@ app.controller('appCtrl',function($scope){
   $scope.removePoint=function(ind){
   	$scope.xVals.splice(ind,1);
   	$scope.yVals.splice(ind,1);
+    $scope.removePlotPoint(ind);
   };
 
   $scope.calcRegress=function(){
@@ -47,7 +49,6 @@ app.controller('appCtrl',function($scope){
         $scope.plotGraph();
       }else{
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
-        // console.log("trig solut "+$scope.solution);
         //doesn't always work when the order is 2 less than the fucking number of points, i don't know why
         $scope.plotGraph();
       }
@@ -66,34 +67,27 @@ app.controller('appCtrl',function($scope){
   };
 
   $scope.plotPoint=function(cX,cY){
-    var myGraph = new Graph({
-      canvasId: 'myCanvas',
-      minX: -5,
-      minY: -15,
-      maxX: 15,
-      maxY: 5,
-      unitsPerTick: 1
-    });
-
     myGraph.drawPoint(cX,cY);
+    $scope.plottedPoints.push([cX,cY]);
+  }
+
+  $scope.removePlotPoint=function(ind){
+    $scope.plottedPoints.splice(ind,1);
+    // console.log("cmon");
+    myGraph.redrawGraph();
+    for(var i=0;i<$scope.plottedPoints.length;i++){
+      console.log("what"+$scope.plottedPoints[i][0]+" "+$scope.plottedPoints[i][1]);
+      myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 
+    }
   }
 
   $scope.plotGraph=function(){
-    var myGraph = new Graph({
-      canvasId: 'myCanvas',
-      minX: -5,
-      minY: -15,
-      maxX: 15,
-      maxY: 5,
-      unitsPerTick: 1
-    });
-
     //different colors for different function spaces
-    var color = {
-      '0': 'blue',
-      '1': 'red',
-      '2': 'orange',
-      '3': 'green'
+    var color={
+      '0':'blue',
+      '1':'red',
+      '2':'orange',
+      '3':'green'
     }
 
     myGraph.drawEquation(function(x) {

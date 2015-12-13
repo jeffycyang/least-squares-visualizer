@@ -226,7 +226,6 @@
         };
 
         Graph.prototype.drawPoint = function(cX, cY) {
-          console.log(cX+" "+cY);
           var context = this.context;
           var radius = (this.unitX + this.unitY)/20;
           cX = this.unitX * cX + 5 * this.unitX;
@@ -240,6 +239,31 @@
           context.fillStyle = 'black';
           context.fill();
           context.stroke();
+        };
+
+        //this is not working...
+        Graph.prototype.redrawGraph = function(){
+          var canvas = document.getElementById("myCanvas");
+          var context = canvas.getContext("2d");
+          context.clearRect(0,0,canvas.width,canvas.height);
+
+          // context.config = {
+          //   canvasId: 'myCanvas',
+          //   minX: -5,
+          //   minY: -15,
+          //   maxX: 15,
+          //   maxY: 5,
+          //   unitsPerTick: 1
+          // };
+
+          this.minX = -5;
+          this.minY = -15;
+          this.maxX = 15;
+          this.maxY = 5;
+          this.unitsPerTick = 1;
+
+          this.drawXAxis();
+          this.drawYAxis();
         };
 
         var myGraph = new Graph({
