@@ -35,6 +35,7 @@ app.controller('appCtrl',function($scope){
     	  $scope.isValid=true;
     	}
     }
+
     //handle order error for trigonometric fit
     // if($scope.saveftype==='2'){
     //   if($scope.order>$scope.xVals.length){
@@ -43,13 +44,21 @@ app.controller('appCtrl',function($scope){
     //     $scope.isValid=true;
     //   }
     // }
+
+    //handle error for logarithmic fit
+
+    //handle error for exponential fit
+
     if($scope.xVals.length!==0&&$scope.yVals.length!==0&&$scope.isValid){
       if($scope.saveftype==='1'||$scope.saveftype==='3'){
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals);
         $scope.plotGraph();
-      }else{
+      }else if($scope.saveftype==='2'){
         $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order);
         //doesn't always work when the order is 2 less than the fucking number of points, i don't know why
+        $scope.plotGraph();
+      }else{
+        $scope.solution=leastSqr(Number($scope.ftype),$scope.xVals,$scope.yVals,$scope.order+1);
         $scope.plotGraph();
       }
     }
@@ -76,7 +85,6 @@ app.controller('appCtrl',function($scope){
     // console.log("cmon");
     myGraph.redrawGraph();
     for(var i=0;i<$scope.plottedPoints.length;i++){
-      console.log("what"+$scope.plottedPoints[i][0]+" "+$scope.plottedPoints[i][1]);
       myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 
     }
   }
