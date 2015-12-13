@@ -53,7 +53,7 @@ app.controller('appCtrl',function($scope){
     if($scope.saveftype==='3'){
       var noXZero=true;
       for(var i=0;i<$scope.xVals.length;i++){
-        if($scope.yVals[i]<=0){
+        if($scope.xVals[i]<=0){
           noXZero=false;
         }
       }
@@ -86,6 +86,7 @@ app.controller('appCtrl',function($scope){
         $scope.plotGraph();
       }
     }
+
     if($scope.saveftype==='2'){
       var order=1;
       for(var i=0;i<$scope.solution.length;i++){

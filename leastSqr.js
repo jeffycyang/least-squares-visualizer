@@ -192,13 +192,13 @@ function createY(type,yValues){
 	return yVector;
 }
 function transposeArray(arr){
-    var newArray = [];
-    var numCol = arr[0].length;
-    for(var i = 0; i < numCol; i++){
+    var newArray=[];
+    var numCol=arr[0].length;
+    for(var i=0;i<numCol;i++){
         newArray[i]=[];
     }
-    for(var j = 0; j < arr.length ; j++){
-        for(var k = 0; k < numCol; k++){
+    for(var j=0;j<arr.length;j++){
+        for(var k=0;k<numCol;k++){
             newArray[k].push(arr[j][k]);
         }
     }
