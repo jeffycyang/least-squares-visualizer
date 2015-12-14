@@ -15,6 +15,6 @@
 - [ ] Credit to Andrew Ippoliti for his matrix inversion function (http://blog.acipo.com/matrix-inversion-in-javascript/)
 
 ## More Information
-- [ ] Information about how and why this works can be found at Jeffery Y. C. Yang's blogpost (http://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/)
-- [ ] Method of Least Squares (https://en.wikipedia.org/wiki/Least_squares)
-- [ ] Fundamental Theorem of Linear Algebra (https://en.wikipedia.org/wiki/Fundamental_theorem_of_linear_algebra)
+- [ ] Information about how and why this works can be found at Jeffery Y. C. Yang's blogpost - http://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/
+- [ ] Method of Least Squares - https://en.wikipedia.org/wiki/Least_squares
+- [ ] Fundamental Theorem of Linear Algebra - https://en.wikipedia.org/wiki/Fundamental_theorem_of_linear_algebra
