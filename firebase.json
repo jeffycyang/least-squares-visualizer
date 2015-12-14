@@ -1,5 +1,5 @@
 {
-  "firebase": "Least-Squares-Visualizer",
+  "firebase": "least-squares-visualizer",
   "public": "public",
   "ignore": [
     "firebase.json",
