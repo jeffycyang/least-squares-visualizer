@@ -1,29 +1,20 @@
 
-# MVP (Solo) Project
+# Least Squares Visualizer
 
-## Product Specific Requirements
-- [ ] Create js files for matrix operations
-  - [ ] create column vector from input X values
-  - [ ] create column vector from input Y values
-  - [ ] create X matrix from X vector
-  - [ ] create function to transpose X matrix
-  - [ ] create function to invert matrices (suggest finding one online)
-  - [ ] create function to multiply matrices
-  - [ ] create function that uses all the above to run least squares regression given input X and Y values
-- [ ] Create webpage using angular to allow users to input their data
-- [ ] Use angular to dynamically display the data points on the page
-- [ ] Allow user to click a data point to remove it
-- [ ] Allow users to click a submit button that runs the data through the least squares regression process and output the results
-- [ ] Display the results as the actual correlation function
-- [ ] Allow users to input an x-value and return the corresponding y-value output from the computed correlation function
+## Features
+- [ ] Input and display data-points
+- [ ] Choose from four different function spaces: polynomial, exponential, trigonmetric, logarithmic
+    - [ ] For polynomial and trigonometric, choose the degree (number of terms)
+- [ ] Displays best fit function for the inputted data-points
+- [ ] Graphs best fit function
+- [ ] Remove point(s) on click
+- [ ] Clear graph, and clear point(s) buttons
 
-## Extra Credit
-- [ ] Use some graphical library like D3, Sigma, Highcharts, or HTML5 Canvas and plot the data points as well as the resulting function on the same Cartesian graph
-- [ ] Allow users to pick from choices of function spaces - polynomial, exponential, trigonometric, and logarithmic
-- [ ] Allow users ability to decide where to round coefficients off to (tenths, hundredths, etc.)
+## Credit
+- [ ] Least Squares Visualizer is created by Jeffery Y. C. Yang and is a product of the inspirational MakerSquare experience and his desire to give something back by demonstrating his love for mathematics - in this case, the Fundamental Theorem of Linear Algebra.
+- [ ] Credit to Andrew Ippoliti for his matrix inversion function (http://blog.acipo.com/matrix-inversion-in-javascript/)
 
-## Nightmare Mode
-- [ ] Add error term to allow users to accurately assess the confidence in a correlation
-- [ ] Automatically pick the function that has the smallest error term
-- [ ] Allow users ability to input batch data set
-- [ ] Allow users ability to define a metric - instead of multiplication between matrix elements in any matrix operation - allow an arbitrary binary operation that can be treated as a metric (you better know some math for this...)
+## More Information
+- [ ] Information about how and why this works can be found at Jeffery Y. C. Yang's blogpost (http://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/)
+- [ ] Method of Least Squares (https://en.wikipedia.org/wiki/Least_squares)
+- [ ] Fundamental Theorem of Linear Algebra (https://en.wikipedia.org/wiki/Fundamental_theorem_of_linear_algebra)
