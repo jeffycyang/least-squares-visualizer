@@ -12,6 +12,7 @@ app.controller('appCtrl',function($scope){
   $scope.hasCalc=false;
   $scope.isValid=true;
   $scope.plottedPoints=[];
+  $scope.foundYVal;
 
   $scope.addPoint=function(){
   	$scope.xVals.push($scope.x_val);
@@ -103,7 +104,7 @@ app.controller('appCtrl',function($scope){
   $scope.plotPoint=function(cX,cY){
     myGraph.drawPoint(cX,cY);
     $scope.plottedPoints.push([cX,cY]);
-  }
+  };
 
   $scope.removePlotPoint=function(ind){
     $scope.plottedPoints.splice(ind,1);
@@ -111,11 +112,55 @@ app.controller('appCtrl',function($scope){
     for(var i=0;i<$scope.plottedPoints.length;i++){
       myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 
     }
-  }
+  };
 
-  $scope.forecastePoint=function(){
-    
-  }
+  $scope.calcYVal=function(xVal){
+    var x=xVal;
+    if($scope.hasCalc){
+      var solution=$scope.solution;
+      var currTerm="";
+      var eq="";
+      if($scope.ftype==='0'){
+        for(var i=0;i<solution.length;i++){
+          currTerm="";
+          for(var j=0;j<i;j++){
+            if(j!==i-1){
+              currTerm+="x*";
+            }else{
+              currTerm+="x";
+            }
+          }
+          if(currTerm){
+            eq+=JSON.stringify(solution[i][0])+"*"+currTerm;
+            if(i!==solution.length-1){
+              eq+="+";
+            }
+          }else{
+            eq+=JSON.stringify(solution[i][0]);
+            if(i!==solution.length-1){
+              eq+="+";
+            }
+          }
+        }
+        console.log("solution "+eq);
+        $scope.foundYVal=eval(eq);
+      }
+    }
+  };
+
+  $scope.removeCurves=function(){
+    myGraph.redrawGraph();
+    for(var i=0;i<$scope.plottedPoints.length;i++){
+      myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 
+    }
+  };
+
+  $scope.removePoints=function(){
+    for(var i=0;i<$scope.xVals.length;i++){
+      $scope.removePoint(i);
+    }
+    myGraph.redrawGraph();
+  };
 
   $scope.plotGraph=function(){
     //different colors for different function spaces

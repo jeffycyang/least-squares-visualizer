@@ -39,11 +39,6 @@
         <button type="submit" ng-click="hasCalc=true">Calculate</button>
       </form>
 
-      <!--forecast point-->
-      <!-- <form name="forecastePoint" ng-submit="forecastePoint()">
-        <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_valForce" />
-      </form> -->
-
       <div ng-show="isValid">
         <span ng-show="hasCalc"><strong>y = </strong></span>
         <span ng-repeat="c in solution">
@@ -63,9 +58,15 @@
         </span>
       </div>
 
-      <!--<form ng-show="isValid" ng-submit="forecast()">
-        <input type="number" ng-model="futurePoint" />
-        <buttom type="submit"></button>
+      <div>
+        <button ng-click="removeCurves()">Clear Curves</button>
+      </div>
+      <div>
+        <button ng-click="removePoints()">Clear Graph</button>
+      </div>
+      <!--<form ng-show="isValid" ng-submit="calcYVal(arb_x_val)">
+        <span>Input x-value: <input type="number" step="any" ng-model="arb_x_val" /></span>
+        <buttom type="submit">Find y-value</button>
       </form>-->
 
       <div>
@@ -73,6 +74,8 @@
         <span ng-show="!isValid&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
         <span ng-show="!isValid&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
       </div>
+
+      <!--remove all points-->
 
       <canvas id="myCanvas" width="578" height="300" style="margin-top: 10px"></canvas>
 
@@ -252,15 +255,6 @@
           var canvas = document.getElementById("myCanvas");
           var context = canvas.getContext("2d");
           context.clearRect(0,0,canvas.width,canvas.height);
-
-          // context.config = {
-          //   canvasId: 'myCanvas',
-          //   minX: -5,
-          //   minY: -15,
-          //   maxX: 15,
-          //   maxY: 5,
-          //   unitsPerTick: 1
-          // };
 
           this.minX = -5;
           this.minY = -15;
