@@ -15,6 +15,7 @@
   </head>
   <body>
     <h1>Linear Least Squares Visualizer</h1>
+    <p>Enter a set of data points, pick a function space, pick a degree/order if required - see the equation and graph for the best fit line/curve!</p>
     <div ng-app="app" ng-controller="appCtrl">
 
       <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
@@ -80,5 +81,12 @@
 
       <script src="js/graph.js"></script>
     </div>
+
+    <footer>
+      <p>&copy; Jeffrey Y.C. Yang</p>
+      <p>More Information: <a href="https://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/">Least Squares Regression & The Fundamental Theorem of Linear Algebra</a></p>
+      <p><a href="https://jeffycyang.github.io/">Blog</a></p>
+      <p><a href="https://github.com/jeffycyang">Github</a></p>
+    </footer>
   </body>
 </html>
