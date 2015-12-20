@@ -114,6 +114,20 @@ app.controller('appCtrl',function($scope){
     }
   };
 
+  $scope.onLoadExample=function(){
+    var xEx=[0.5,1.2,1.565,2.22,2.357,2.87,3.15,3.549,3.77,4.17,3.698,4.314,4.87,5.101,5.309,5.662,5.72,6.12,6.809,6.59,7.0875,7.571,7.954];
+    var yEx=[0.333,2.16,2.77,4.447,3.929,5.33,4.671,4.56,5.233,5.83,5.517,5.786,5.13,5.32,4.977,4.597,4.83,4.013,3.577,3.309,2.764,2.106,1.397];
+    for(var i=0;i<xEx.length;i++){
+      $scope.xVals.push(xEx[i]);
+      $scope.yVals.push(yEx[i]);
+      $scope.plotPoint(xEx[i],yEx[i]);      
+    }
+    $scope.ftype='2';
+    $scope.order=7;
+    //call eval onload somehow
+    $scope.calcRegress();
+  };
+
   $scope.calcYVal=function(xVal){
     var x=xVal;
     if($scope.hasCalc){
@@ -165,10 +179,10 @@ app.controller('appCtrl',function($scope){
   $scope.plotGraph=function(){
     //different colors for different function spaces
     var color={
-      '0':'blue',
-      '1':'red',
-      '2':'orange',
-      '3':'green'
+      '0':'blue', //polynomial
+      '1':'red', //exponential
+      '2':'orange', //trigonometric
+      '3':'green' //logarithmic
     }
 
     myGraph.drawEquation(function(x) {

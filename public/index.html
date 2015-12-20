@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Regression Chart Creator</title>
+    <title>Linear Least Squares Visualizer</title>
     <!-- <link rel="stylesheet" type="text/css" href="styles/style.css" /> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="js/app.js"></script>
@@ -21,7 +21,7 @@
       <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
         <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_val" />
         <span>Y-value:  </span><input type="number" step="any" name="yVal" ng-model="y_val" />
-        <button type="submit">Submit</button>
+        <button type="submit" ng-disabled="!x_val||!y_val">Submit</button>
       </form>
 
       <div ng-repeat="i in xVals" ng-click="removePoint($index)">
@@ -47,7 +47,6 @@
             {{c[0]}}<span ng-if="$index!==0"><strong> x</strong><sup ng-if="$index!==1">{{$index}}</sup></span><span ng-if="solution[$index+1][0]"> + </span>
           </span>
           <span ng-if="saveftype==='2'">
-            <!--fix $index ref-->
             {{c[0]}}<span ng-if="$index!==0&&$index%2===1"><strong> sin({{trigOrder[$index]}}x)</strong></span><span ng-if="$index!==0&&$index%2===0"><strong> cos({{trigOrder[$index]}}x)</strong></span><span ng-if="solution[$index+1][0]"> + </span>
           </span>
         </span>
