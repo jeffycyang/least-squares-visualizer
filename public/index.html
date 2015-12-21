@@ -21,7 +21,7 @@
       <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
         <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_val" />
         <span>Y-value:  </span><input type="number" step="any" name="yVal" ng-model="y_val" />
-        <button type="submit" ng-disabled="!x_val||!y_val">Submit</button>
+        <button type="submit" ng-disabled="x_val===null||y_val===null">Submit</button>
       </form>
 
       <div ng-repeat="i in xVals" ng-click="removePoint($index)">
@@ -37,7 +37,7 @@
           <option value="3">Logarithmic</option>
         </select>
         <span ng-show="ftype==='0'||ftype==='2'"><span>order: </span><input type="number" ng-model="order" min="0" /></span>
-        <button type="submit" ng-click="hasCalc=true">Calculate</button>
+        <button type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')">Calculate</button>
       </form>
 
       <div ng-show="isValid">
