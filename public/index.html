@@ -70,11 +70,11 @@
         <buttom type="submit">Find y-value</button>
       </form>-->
 
-      <div>
+      <div ng-show="!isValid">
         <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
-        <span ng-show="!isValid&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
+        <span ng-show="!noYZero&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
         <span ng-show="saveftype==='1'&&xVals.length<2">Invalid entry, must have more than 2 data points for exponential fit</span>
-        <span ng-show="!isValid&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
+        <span ng-show="!noXZero&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
         <span ng-show="saveftype==='3'&&xVals.length<2">Invalid entry, must have more than 2 data points for logarithmic fit</span>
       </div>
 

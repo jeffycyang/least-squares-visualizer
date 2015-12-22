@@ -13,6 +13,8 @@ app.controller('appCtrl',function($scope){
   $scope.trigOrder=[1];
   $scope.hasCalc=false;
   $scope.isValid=true;
+  $scope.noYZero=true;
+  $scope.noXZero=true;
   $scope.plottedPoints=[];
   $scope.foundYVal;
 
@@ -23,6 +25,10 @@ app.controller('appCtrl',function($scope){
   };
 
   $scope.removePoint=function(ind){
+    $scope.noXZero=true;
+    $scope.noYZero=true;
+    $scope.isValid=true;
+    $scope.hasCalc=false;
   	$scope.xVals.splice(ind,1);
   	$scope.yVals.splice(ind,1);
     $scope.removePlotPoint(ind);
@@ -40,13 +46,13 @@ app.controller('appCtrl',function($scope){
     }
 
     if($scope.saveftype==='1'){
-      var noYZero=true;
+      $scope.noYZero=true;
       for(var i=0;i<$scope.yVals.length;i++){
         if($scope.yVals[i]<=0){
-          noYZero=false;
+          $scope.noYZero=false;
         }
       }
-      if(!noYZero){
+      if(!$scope.noYZero||$scope.xVals.length<2){
         $scope.isValid=false;
       }else{
         $scope.isValid=true; 
@@ -54,13 +60,13 @@ app.controller('appCtrl',function($scope){
     }
 
     if($scope.saveftype==='3'){
-      var noXZero=true;
+      $scope.noXZero=true;
       for(var i=0;i<$scope.xVals.length;i++){
         if($scope.xVals[i]<=0){
-          noXZero=false;
+          $scope.noXZero=false;
         }
       }
-      if(!noXZero){
+      if(!$scope.noXZero||$scope.xVals.length<2){
         $scope.isValid=false;
       }else{
         $scope.isValid=true; 
@@ -165,6 +171,8 @@ app.controller('appCtrl',function($scope){
   };
 
   $scope.removeCurves=function(){
+    $scope.solution=null;
+    $scope.hasCalc=false;
     myGraph.redrawGraph();
     for(var i=0;i<$scope.plottedPoints.length;i++){
       myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 
