@@ -37,7 +37,7 @@
           <option value="3">Logarithmic</option>
         </select>
         <span ng-show="ftype==='0'||ftype==='2'"><span>order: </span><input type="number" ng-model="order" min="0" /></span>
-        <button type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')">Calculate</button>
+        <button type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')||xVals.length<1||order%1!==0">Calculate</button>
       </form>
 
       <div ng-show="isValid">
@@ -73,9 +73,9 @@
       <div ng-show="!isValid">
         <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
         <span ng-show="!noYZero&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
-        <span ng-show="saveftype==='1'&&xVals.length<2">Invalid entry, must have more than 2 data points for exponential fit</span>
+        <span ng-show="saveftype==='1'&&xVals.length<2">Invalid entry, must have 2 or more data points for exponential fit</span>
         <span ng-show="!noXZero&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
-        <span ng-show="saveftype==='3'&&xVals.length<2">Invalid entry, must have more than 2 data points for logarithmic fit</span>
+        <span ng-show="saveftype==='3'&&xVals.length<2">Invalid entry, must have 2 or more data points for logarithmic fit</span>
       </div>
 
       <canvas id="myCanvas" width="578" height="478" style="margin-top: 10px"></canvas>
