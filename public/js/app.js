@@ -133,6 +133,7 @@ app.controller('appCtrl',function($scope){
     $scope.ftype='2';
     $scope.order=7;
     //call eval onload somehow
+    $scope.hasCalc=true;
     $scope.calcRegress();
   };
 

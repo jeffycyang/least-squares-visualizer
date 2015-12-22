@@ -16,7 +16,7 @@
   <body>
     <h1>Linear Least Squares Visualizer</h1>
     <p>Enter a set of data points, pick a function space, pick a degree/order if required - see the equation and graph for the best fit line/curve!</p>
-    <div ng-app="app" ng-controller="appCtrl">
+    <div ng-app="app" ng-controller="appCtrl" ng-init="onLoadExample()">
 
       <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
         <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_val"/>
