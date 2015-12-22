@@ -1,10 +1,12 @@
 var app=angular.module('app',[]);
 
 app.controller('appCtrl',function($scope){
+  $scope.x_val=null;
+  $scope.y_val=null;
   $scope.xVals=[];
   $scope.yVals=[];
   $scope.funcType;
-  $scope.order;
+  $scope.order=null;
   $scope.solution;
   $scope.ftype;
   $scope.saveftype;
@@ -172,7 +174,9 @@ app.controller('appCtrl',function($scope){
   $scope.removePoints=function(){
     while($scope.xVals.length>0){
       $scope.removePoint(0);
-    } 
+    }
+    $scope.solution=null;
+    $scope.hasCalc=false;
     myGraph.redrawGraph();
   };
 

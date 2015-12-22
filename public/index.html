@@ -19,8 +19,8 @@
     <div ng-app="app" ng-controller="appCtrl">
 
       <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
-        <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_val" />
-        <span>Y-value:  </span><input type="number" step="any" name="yVal" ng-model="y_val" />
+        <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_val"/>
+        <span>Y-value:  </span><input type="number" step="any" name="yVal" ng-model="y_val"/>
         <button type="submit" ng-disabled="x_val===null||y_val===null">Submit</button>
       </form>
 
@@ -73,10 +73,12 @@
       <div>
         <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
         <span ng-show="!isValid&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
+        <span ng-show="saveftype==='1'&&xVals.length<2">Invalid entry, must have more than 2 data points for exponential fit</span>
         <span ng-show="!isValid&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
+        <span ng-show="saveftype==='3'&&xVals.length<2">Invalid entry, must have more than 2 data points for logarithmic fit</span>
       </div>
 
-      <canvas id="myCanvas" width="578" height="300" style="margin-top: 10px"></canvas>
+      <canvas id="myCanvas" width="578" height="478" style="margin-top: 10px"></canvas>
 
       <script src="js/graph.js"></script>
     </div>
