@@ -116,6 +116,7 @@ app.controller('appCtrl',function($scope){
 
   $scope.removePlotPoint=function(ind){
     $scope.plottedPoints.splice(ind,1);
+    $scope.solution="";
     myGraph.redrawGraph();
     for(var i=0;i<$scope.plottedPoints.length;i++){
       myGraph.drawPoint($scope.plottedPoints[i][0],$scope.plottedPoints[i][1]); 

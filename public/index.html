@@ -8,7 +8,7 @@
     <script src="js/app.js"></script>
     <script src="js/leastSqr.js"></script>
     <style>
-      body { 
+      body  { 
               font-family: Arial Rounded MT Bold;
             }
     </style>
@@ -24,11 +24,14 @@
         <button type="submit" ng-disabled="x_val===null||y_val===null">Submit</button>
       </form>
 
-      <div ng-repeat="i in xVals" ng-click="removePoint($index)">
-        ( {{i}} , {{yVals[$index]}} )
+      <div id="points" style="float: right">
+        <h3>Data Points:</h3>
+        <div ng-repeat="i in xVals" ng-click="removePoint($index)">
+          ( {{i}} , {{yVals[$index]}} )
+        </div>
       </div>
 
-      <form name="regress" ng-submit="calcRegress()">
+      <form name="regress" ng-submit="calcRegress()" style="margin-bottom: 5px">
         <span>type: </span>
         <select name="ftype" ng-model="ftype">
           <option value="0">Polynomial</option>
@@ -40,7 +43,8 @@
         <button type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')||xVals.length<1||order%1!==0">Calculate</button>
       </form>
 
-      <div ng-show="isValid">
+      <h3 style="margin: 5px 0 2px 0">Equation:</h3>
+      <div ng-show="isValid" style="margin-bottom: 5px">
         <span ng-show="hasCalc"><strong>y = </strong></span>
         <span ng-repeat="c in solution">
           <span ng-if="saveftype==='0'">
