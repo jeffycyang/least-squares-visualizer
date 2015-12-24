@@ -69,10 +69,11 @@
         <button ng-click="removePoints()">Clear Graph</button>
       </div>
 
-      <!--<form ng-show="isValid" ng-submit="calcYVal(arb_x_val)">
+      <form ng-show="isValid" ng-submit="calcYVal(arb_x_val)">
         <span>Input x-value: <input type="number" step="any" ng-model="arb_x_val" /></span>
-        <buttom type="submit">Find y-value</button>
-      </form>-->
+        <button type="submit">Find y-value</button>
+      </form>
+      <p>{{foundYVal}}</p>
 
       <div ng-show="!isValid">
         <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
@@ -88,7 +89,7 @@
     </div>
 
     <footer>
-      <p>&copy; Jeffrey Y.C. Yang</p>
+      <p>&copy; 2015 Jeffrey Y.C. Yang</p>
       <p>More Information: <a href="https://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/">Least Squares Regression & The Fundamental Theorem of Linear Algebra</a></p>
       <p><a href="https://jeffycyang.github.io/">Blog</a></p>
       <p><a href="https://github.com/jeffycyang">Github</a></p>

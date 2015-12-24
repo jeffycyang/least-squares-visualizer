@@ -17,6 +17,8 @@ app.controller('appCtrl',function($scope){
   $scope.noXZero=true;
   $scope.plottedPoints=[];
   $scope.foundYVal;
+  $scope.arb_x_val;
+  $scope.eq;
 
   $scope.addPoint=function(){
   	$scope.xVals.push($scope.x_val);
@@ -141,34 +143,35 @@ app.controller('appCtrl',function($scope){
   $scope.calcYVal=function(xVal){
     var x=xVal;
     if($scope.hasCalc){
-      var solution=$scope.solution;
-      var currTerm="";
-      var eq="";
-      if($scope.ftype==='0'){
-        for(var i=0;i<solution.length;i++){
-          currTerm="";
-          for(var j=0;j<i;j++){
-            if(j!==i-1){
-              currTerm+="x*";
-            }else{
-              currTerm+="x";
-            }
-          }
-          if(currTerm){
-            eq+=JSON.stringify(solution[i][0])+"*"+currTerm;
-            if(i!==solution.length-1){
-              eq+="+";
-            }
-          }else{
-            eq+=JSON.stringify(solution[i][0]);
-            if(i!==solution.length-1){
-              eq+="+";
-            }
-          }
-        }
-        console.log("solution "+eq);
-        $scope.foundYVal=eval(eq);
-      }
+      // var solution=$scope.solution;
+      // var currTerm="";
+      // var eq="";
+      // if($scope.ftype==='0'){
+      //   for(var i=0;i<solution.length;i++){
+      //     currTerm="";
+      //     for(var j=0;j<i;j++){
+      //       if(j!==i-1){
+      //         currTerm+="x*";
+      //       }else{
+      //         currTerm+="x";
+      //       }
+      //     }
+      //     if(currTerm){
+      //       eq+=JSON.stringify(solution[i][0])+"*"+currTerm;
+      //       if(i!==solution.length-1){
+      //         eq+="+";
+      //       }
+      //     }else{
+      //       eq+=JSON.stringify(solution[i][0]);
+      //       if(i!==solution.length-1){
+      //         eq+="+";
+      //       }
+      //     }
+      //   }
+      //   console.log("solution "+eq);
+      //   $scope.foundYVal=eval(eq);
+      // }
+      $scope.foundYVal=eval($scope.eq);
     }
   };
 
@@ -226,11 +229,13 @@ app.controller('appCtrl',function($scope){
               }
             }
           }
+          $scope.eq=eq;
           console.log("solution "+eq);
           return eval(eq);
         }
         if($scope.ftype==='1'){
           eq=JSON.stringify(solution[0][0])+"*Math.exp("+JSON.stringify(solution[1][0])+"*x)";
+          $scope.eq=eq;
           console.log("solution "+eq);
           return eval(eq);
         }
@@ -250,11 +255,13 @@ app.controller('appCtrl',function($scope){
               eq+="+";
             }
           }
+          $scope.eq=eq;
           console.log("solution "+eq);
           return eval(eq);
         }
         if($scope.ftype==='3'){
           eq=JSON.stringify(solution[0][0])+"+"+JSON.stringify(solution[1][0])+"*Math.log(x)";
+          $scope.eq=eq;
           console.log("solution "+eq);
           return eval(eq);
         }
