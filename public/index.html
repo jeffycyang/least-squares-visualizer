@@ -73,7 +73,7 @@
         <span>Input x-value: <input type="number" step="any" ng-model="arb_x_val" /></span>
         <button type="submit">Find y-value</button>
       </form>
-      <p>{{foundYVal}}</p>
+      <p><strong>y = </strong>{{foundYVal}}</p>
 
       <div ng-show="!isValid">
         <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
