@@ -20,83 +20,82 @@
 
     <div class="row">
 
-      <div class="col-md-2">
+      <div class="col-sm-2">
       </div>
 
-      <div class="col-md-8">
+      <div class="col-sm-8">
         <h1 style="text-align: center;">Linear Least Squares Visualizer</h1>
       </div>
 
-      <div class="col-md-2">
+      <div class="col-sm-2">
       </div>
 
     </div>
 
     <div class="row">
 
-      <div class="col-md-2">
+      <div class="col-sm-2">
       </div>
 
-      <div class="col-md-8">
+      <div class="col-sm-8">
         <p>Enter a set of data points, pick a function space, pick a degree/order if required - see the equation and graph for the best fit line/curve!</p>
       </div>
 
-      <div class="col-md-2">
+      <div class="col-sm-2">
       </div>
 
     </div>
 
     <div class="row">
 
-      <div class="col-md-1">
+      <div class="col-sm-1">
       </div>
 
-      <div class="col-md-5">
+      <div class="col-sm-5">
         <h3 style="margin-bottom: 12px">Input Parameters:</h3>
 
         <div class="row" style="margin-bottom: 5px">
           <form name="inputForm" ng-submit="addPoint()">
-            <div class="col-md-5">
+            <div class="col-sm-5">
               <div class="row">
-              <span class="col-md-4">X-value:  </span><input class="col-md-7" type="number" step="any" name="xVal" ng-model="x_val"/><span class="col-md-1"></span>
+                <span class="col-sm-4">X-value:  </span><input class="col-sm-7" type="number" step="any" name="xVal" ng-model="x_val"/><span class="col-sm-1"></span>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-sm-5">
               <div class="row">
-              <span class="col-md-4">Y-value:  </span><input class="col-md-7" type="number" step="any" name="yVal" ng-model="y_val"/><span class="col-md-1"></span>
+                <span class="col-sm-4">Y-value:  </span><input class="col-sm-7" type="number" step="any" name="yVal" ng-model="y_val"/><span class="col-sm-1"></span>
               </div>
             </div>
-            <button class="col-md-2" type="submit" ng-disabled="x_val===null||y_val===null">Add Point</button>
+            <button class="col-sm-2" type="submit" ng-disabled="x_val===null||y_val===null">Add Point</button>
           </form>
         </div>
 
         <div class="row">
           <form name="regress" ng-submit="calcRegress()" style="margin-bottom: 5px">
-            <div class="col-md-5">
+            <div class="col-sm-5">
               <div class="row">
-              <!-- <span class="col-md-1"></span> -->
-              <span class="col-md-4">Type: </span>
-              <select class="col-md-7" name="ftype" ng-model="ftype">
-                <option value="0">Polynomial</option>
-                <option value="1">Exponential</option>
-                <option value="2">Trigonometric</option>
-                <option value="3">Logarithmic</option>
-              </select>
-              <span class="col-md-1"></span>
+                <span class="col-sm-4">Type: </span>
+                <select class="col-sm-7" name="ftype" ng-model="ftype">
+                  <option value="0">Polynomial</option>
+                  <option value="1">Exponential</option>
+                  <option value="2">Trigonometric</option>
+                  <option value="3">Logarithmic</option>
+                </select>
+                <span class="col-sm-1"></span>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-sm-5">
               <div class="row">
-              <span ng-show="ftype==='0'||ftype==='2'"><span class="col-md-4">Degree: </span><input class="col-md-7" type="number" ng-model="order" min="0"/><span class="col-md-1"></span></span>
+                <span ng-show="ftype==='0'||ftype==='2'"><span class="col-sm-4">Degree: </span><input class="col-sm-7" type="number" ng-model="order" min="0"/><span class="col-sm-1"></span></span>
               </div>
             </div>
-            <button class="col-md-2" type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')||xVals.length<1||order%1!==0">Calculate</button>
+            <button class="col-sm-2" type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')||xVals.length<1||order%1!==0">Calculate</button>
           </form>
         </div>
 
       </div>
 
-      <div id="points" class="col-md-5">
+      <div id="points" class="col-sm-5">
         <h3>Inputted Data Points:</h3>
         <div style="border-style:inset;border-width:2px;padding:2px 5px;background-color:#fff;">
           <span ng-repeat="i in xVals" ng-click="removePoint($index)">
@@ -105,17 +104,17 @@
         </div>
       </div>
 
-      <div class="col-md-1">
+      <div class="col-sm-1">
       </div>
 
     </div>
 
       <div class="row">
 
-        <div class="col-md-1">
+        <div class="col-sm-1">
         </div>
 
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <h3>Best Fit Equation:</h3>
 
           <div ng-show="isValid" style="margin-bottom: 5px">
@@ -137,17 +136,17 @@
           </div>
         </div>
 
-        <div class="col-md-1">
+        <div class="col-sm-1">
         </div>
 
       </div>
 
       <div class="row">
 
-        <div class="col-md-1">
+        <div class="col-sm-1">
         </div>
 
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <h3>Calculate Output Y-value:</h3>
           <form ng-show="isValid" ng-submit="calcYVal(arb_x_val)">
             <span>Input X-value: <input type="number" step="any" ng-model="arb_x_val"/></span>
@@ -164,37 +163,37 @@
           </div>
         </div>
 
-        <div class="col-md-1">
+        <div class="col-sm-1">
         </div>
 
       </div>
 
       <div class="row">
 
-        <div class="col-md-1">
+        <div class="col-sm-1">
         </div>
 
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <button ng-click="removeCurves()">Clear Curves</button>
           <button ng-click="removePoints()">Clear Graph</button>
         </div>
 
-        <div class="col-md-1">
+        <div class="col-sm-1">
         </div>
 
       </div>
 
       <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-sm-4">
         </div>
 
-        <div class-"col-md-6">
+        <div class-"col-sm-6">
           <canvas id="myCanvas" width="600" height="600" style="margin-top: 10px"></canvas>
           <script src="js/graph.js"></script>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-sm-2">
         </div>
 
       </div>
@@ -203,17 +202,17 @@
 
     <footer class="row">
 
-      <div class="col-md-1">
+      <div class="col-sm-1">
       </div>
 
-      <div class="col-md-10">
+      <div class="col-sm-10">
         <p>&copy; 2015 Jeffrey Y.C. Yang</p>
         <p>More Information: <a href="https://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/">Least Squares Regression & The Fundamental Theorem of Linear Algebra</a></p>
         <p><a href="https://jeffycyang.github.io/">Blog</a></p>
         <p><a href="https://github.com/jeffycyang">Github</a></p>
       </div>
 
-      <div class="col-md-1">
+      <div class="col-sm-1">
       </div>
 
     </footer>
