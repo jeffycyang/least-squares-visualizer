@@ -11,7 +11,7 @@
 - Remove point(s) on click
 - Clear graph, and clear point(s) buttons
 
-#To-Do
+## To-Do
 - Re-size graph if added point is out of bounds
 - Enable batch input
 
