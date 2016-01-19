@@ -1,98 +1,226 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Linear Least Squares Visualizer</title>
     <!-- <link rel="stylesheet" type="text/css" href="styles/style.css" /> -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/leastSqr.js"></script>
-    <style>
-      body  { 
-              font-family: Arial Rounded MT Bold;
-            }
-    </style>
   </head>
   <body>
-    <h1>Linear Least Squares Visualizer</h1>
-    <p>Enter a set of data points, pick a function space, pick a degree/order if required - see the equation and graph for the best fit line/curve!</p>
     <div ng-app="app" ng-controller="appCtrl" ng-init="onLoadExample()">
 
-      <form name="inputForm" ng-submit="addPoint()" style="margin-bottom: 5px">
-        <span>X-value:  </span><input type="number" step="any" name="xVal" ng-model="x_val"/>
-        <span>Y-value:  </span><input type="number" step="any" name="yVal" ng-model="y_val"/>
-        <button type="submit" ng-disabled="x_val===null||y_val===null">Submit</button>
-      </form>
+    <div class="row">
 
-      <div id="points" style="float: right">
-        <h3>Data Points:</h3>
-        <div ng-repeat="i in xVals" ng-click="removePoint($index)">
-          ( {{i}} , {{yVals[$index]}} )
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <h1 style="text-align: center;">Linear Least Squares Visualizer</h1>
+      </div>
+
+      <div class="col-md-2">
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <p>Enter a set of data points, pick a function space, pick a degree/order if required - see the equation and graph for the best fit line/curve!</p>
+      </div>
+
+      <div class="col-md-2">
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-1">
+      </div>
+
+      <div class="col-md-5">
+        <h3 style="margin-bottom: 12px">Input Parameters:</h3>
+
+        <div class="row" style="margin-bottom: 5px">
+          <form name="inputForm" ng-submit="addPoint()">
+            <div class="col-md-5">
+              <div class="row">
+              <span class="col-md-4">X-value:  </span><input class="col-md-7" type="number" step="any" name="xVal" ng-model="x_val"/><span class="col-md-1"></span>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="row">
+              <span class="col-md-4">Y-value:  </span><input class="col-md-7" type="number" step="any" name="yVal" ng-model="y_val"/><span class="col-md-1"></span>
+              </div>
+            </div>
+            <button class="col-md-2" type="submit" ng-disabled="x_val===null||y_val===null">Add Point</button>
+          </form>
+        </div>
+
+        <div class="row">
+          <form name="regress" ng-submit="calcRegress()" style="margin-bottom: 5px">
+            <div class="col-md-5">
+              <div class="row">
+              <!-- <span class="col-md-1"></span> -->
+              <span class="col-md-4">Type: </span>
+              <select class="col-md-7" name="ftype" ng-model="ftype">
+                <option value="0">Polynomial</option>
+                <option value="1">Exponential</option>
+                <option value="2">Trigonometric</option>
+                <option value="3">Logarithmic</option>
+              </select>
+              <span class="col-md-1"></span>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="row">
+              <span ng-show="ftype==='0'||ftype==='2'"><span class="col-md-4">Degree: </span><input class="col-md-7" type="number" ng-model="order" min="0"/><span class="col-md-1"></span></span>
+              </div>
+            </div>
+            <button class="col-md-2" type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')||xVals.length<1||order%1!==0">Calculate</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div id="points" class="col-md-5">
+        <h3>Inputted Data Points:</h3>
+        <div style="border-style:inset;border-width:2px;padding:2px 5px;">
+          <span ng-repeat="i in xVals" ng-click="removePoint($index)">
+            ( {{i}} , {{yVals[$index]}} )
+          </span>
         </div>
       </div>
 
-      <form name="regress" ng-submit="calcRegress()" style="margin-bottom: 5px">
-        <span>type: </span>
-        <select name="ftype" ng-model="ftype">
-          <option value="0">Polynomial</option>
-          <option value="1">Exponential</option>
-          <option value="2">Trigonometric</option>
-          <option value="3">Logarithmic</option>
-        </select>
-        <span ng-show="ftype==='0'||ftype==='2'"><span>order: </span><input type="number" ng-model="order" min="0" /></span>
-        <button type="submit" ng-click="hasCalc=true" ng-disabled="order===null&&(ftype==='0'||ftype==='2')||xVals.length<1||order%1!==0">Calculate</button>
-      </form>
-
-      <h3 style="margin: 5px 0 2px 0">Equation:</h3>
-      <div ng-show="isValid" style="margin-bottom: 5px">
-        <span ng-show="hasCalc"><strong>y = </strong></span>
-        <span ng-repeat="c in solution">
-          <span ng-if="saveftype==='0'">
-            {{c[0]}}<span ng-if="$index!==0"><strong> x</strong><sup ng-if="$index!==1">{{$index}}</sup></span><span ng-if="solution[$index+1][0]"> + </span>
-          </span>
-          <span ng-if="saveftype==='2'">
-            {{c[0]}}<span ng-if="$index!==0&&$index%2===1"><strong> sin({{trigOrder[$index]}}x)</strong></span><span ng-if="$index!==0&&$index%2===0"><strong> cos({{trigOrder[$index]}}x)</strong></span><span ng-if="solution[$index+1][0]"> + </span>
-          </span>
-        </span>
-        <span ng-show="hasCalc" ng-if="saveftype==='1'">
-          {{solution[0][0]}}<span><strong> e</strong><sup>{{solution[1][0]}} x</sup></span>
-        </span>
-        <span ng-show="hasCalc" ng-if="saveftype==='3'">
-          {{solution[0][0]}}<span><strong> + </strong>{{solution[1][0]}} ln(x)</span>
-        </span>
+      <div class="col-md-1">
       </div>
 
-      <div>
-        <button ng-click="removeCurves()">Clear Curves</button>
-      </div>
-      <div>
-        <button ng-click="removePoints()">Clear Graph</button>
-      </div>
-
-      <form ng-show="isValid" ng-submit="calcYVal(arb_x_val)">
-        <span>Input x-value: <input type="number" step="any" ng-model="arb_x_val" /></span>
-        <button type="submit">Find y-value</button>
-      </form>
-      <p><strong>y = </strong>{{foundYVal}}</p>
-
-      <div ng-show="!isValid">
-        <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
-        <span ng-show="!noYZero&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
-        <span ng-show="saveftype==='1'&&xVals.length<2">Invalid entry, must have 2 or more data points for exponential fit</span>
-        <span ng-show="!noXZero&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
-        <span ng-show="saveftype==='3'&&xVals.length<2">Invalid entry, must have 2 or more data points for logarithmic fit</span>
-      </div>
-
-      <canvas id="myCanvas" width="578" height="478" style="margin-top: 10px"></canvas>
-
-      <script src="js/graph.js"></script>
     </div>
 
-    <footer>
-      <p>&copy; 2015 Jeffrey Y.C. Yang</p>
-      <p>More Information: <a href="https://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/">Least Squares Regression & The Fundamental Theorem of Linear Algebra</a></p>
-      <p><a href="https://jeffycyang.github.io/">Blog</a></p>
-      <p><a href="https://github.com/jeffycyang">Github</a></p>
+      <div class="row">
+
+        <div class="col-md-1">
+        </div>
+
+        <div class="col-md-10">
+          <h3>Best Fit Equation:</h3>
+
+          <div ng-show="isValid" style="margin-bottom: 5px">
+            <span ng-show="hasCalc"><strong>y = </strong></span>
+            <span ng-repeat="c in solution">
+              <span ng-if="saveftype==='0'">
+                {{c[0].toFixed(5)}}<span ng-if="$index!==0"><strong> x</strong><sup ng-if="$index!==1">{{$index}}</sup></span><span ng-if="solution[$index+1][0]"> + </span>
+              </span>
+              <span ng-if="saveftype==='2'">
+                {{c[0].toFixed(5)}}<span ng-if="$index!==0&&$index%2===1"><strong> sin({{trigOrder[$index]}}x)</strong></span><span ng-if="$index!==0&&$index%2===0"><strong> cos({{trigOrder[$index]}}x)</strong></span><span ng-if="solution[$index+1][0]"> + </span>
+              </span>
+            </span>
+            <span ng-show="hasCalc" ng-if="saveftype==='1'">
+              {{solution[0][0]}}<span><strong> e</strong><sup>{{solution[1][0]}} x</sup></span>
+            </span>
+            <span ng-show="hasCalc" ng-if="saveftype==='3'">
+              {{solution[0][0]}}<span><strong> + </strong>{{solution[1][0]}} ln(x)</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-1">
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-1">
+        </div>
+
+        <div class="col-md-10">
+          <h3>Calculate Output (y-value):</h3>
+          <form ng-show="isValid" ng-submit="calcYVal(arb_x_val)">
+            <span>Input x-value: <input type="number" step="any" ng-model="arb_x_val"/></span>
+            <button type="submit">Find y-value</button>
+          </form>
+          <p><strong>y = </strong>{{foundYVal}}</p>
+
+          <div ng-show="!isValid">
+            <span ng-show="!isValid&&saveftype==='0'">Invalid entry, degree/order of polynomial must be less than the number of data points</span>
+            <span ng-show="!noYZero&&saveftype==='1'">Invalid entry, y-coordinate of points must be greater than 0 for exponential fit</span>
+            <span ng-show="saveftype==='1'&&xVals.length<2">Invalid entry, must have 2 or more data points for exponential fit</span>
+            <span ng-show="!noXZero&&saveftype==='3'">Invalid entry, x-coordinate of points must be greater than 0 for logarithmic fit</span>
+            <span ng-show="saveftype==='3'&&xVals.length<2">Invalid entry, must have 2 or more data points for logarithmic fit</span>
+          </div>
+        </div>
+
+        <div class="col-md-1">
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-1">
+        </div>
+
+        <div class="col-md-10">
+          <button ng-click="removeCurves()">Clear Curves</button>
+          <button ng-click="removePoints()">Clear Graph</button>
+        </div>
+
+        <div class="col-md-1">
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4">
+        </div>
+
+        <div class-"col-md-6">
+          <canvas id="myCanvas" width="600" height="600" style="margin-top: 10px"></canvas>
+          <script src="js/graph.js"></script>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer class="row">
+
+      <div class="col-md-1">
+      </div>
+
+      <div class="col-md-10">
+        <p>&copy; 2015 Jeffrey Y.C. Yang</p>
+        <p>More Information: <a href="https://jeffycyang.github.io/from-least-squares-regression-to-the-fundamental-theorem-of-linear-algebra/">Least Squares Regression & The Fundamental Theorem of Linear Algebra</a></p>
+        <p><a href="https://jeffycyang.github.io/">Blog</a></p>
+        <p><a href="https://github.com/jeffycyang">Github</a></p>
+      </div>
+
+      <div class="col-md-1">
+      </div>
+
     </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
   </body>
 </html>
